@@ -12,5 +12,6 @@ generateButton.addEventListener('click', () => {
     zipcode: zipcode.value,
     feeling: feeling.value,
   };
-  console.log(data);
 });
+
+function getData(route, data) {}

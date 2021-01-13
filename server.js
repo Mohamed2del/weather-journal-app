@@ -23,6 +23,19 @@ app.use(express.static('website'));
 // Setup Server
 const port = 3000;
 
+app.get('/', (req, res) => {
+  console.log(req.body);
+  res.send(projectData);
+});
+
+app.post('/', (req, res) => {
+  projectData.temperature = request.body.temperature;
+  projectData.date = request.body.date;
+  projectData.response = request.body.response;
+  response.end();
+  console.log(projectData);
+});
+
 app.listen(3000, () => {
   console.log('App listening on port 3000!');
 });
