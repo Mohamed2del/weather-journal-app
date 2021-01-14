@@ -69,6 +69,9 @@ function updateUI(date, temperature, content) {
 generateButton.addEventListener('click', () => {
   url = BaseURL;
 
+  if (getUserResponse || getZipCode == '') {
+    alert('Please Fill the zipcode and feeling ');
+  }
   getWeather(url, Key, getZipCode())
     .then((weatherData = {}) => {
       const data = {
