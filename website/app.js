@@ -14,6 +14,7 @@ function getCurrentDate() {
 // get zipcode
 function getZipCode() {
   const zipCodeElement = document.getElementById('zip');
+  // trim for prevent spaces error
   return zipCodeElement.value.trim();
 }
 
@@ -26,7 +27,7 @@ function getUserResponse() {
 
 const getWeather = async (url = '', key, zipCode = '') => {
   // concante the link for the api request
-  const weather_query_url = url + zipCode + '&appid=' + key;
+  const weather_query_url = url + zipCode + '&appid=' + key + '&units=metric';
 
   // fetch  weather
   const request = await fetch(weather_query_url);
