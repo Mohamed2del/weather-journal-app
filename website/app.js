@@ -14,7 +14,7 @@ function getCurrentDate() {
 // get zipcode
 function getZipCode() {
   const zipCodeElement = document.getElementById('zip');
-  return zipCodeElement.value;
+  return zipCodeElement.value.trim();
 }
 
 // get the feeling
