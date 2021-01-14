@@ -1,5 +1,6 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = {};
+
+projectData = [];
 
 // Require Express to run server and routes
 const express = require('express');
@@ -23,18 +24,21 @@ app.use(express.static('website'));
 // Setup Server
 const port = 3000;
 
-// app.get('/all', (req, res) => {
-//   console.log(req.body);
-//   res.send(projectData);
-// });
+app.get('/all', (req, res) => {
+  console.log(req.body);
+  res.send(projectData);
+  projectData = [];
+});
 
-// app.post('/add', (req, res) => {
-//   projectData.temperature = request.body.temperature;
-//   projectData.date = request.body.date;
-//   projectData.response = request.body.response;
-//   response.end();
-//   console.log(projectData);
-// });
+app.post('/add', (req, res) => {
+  console.log(req.body);
+  newEntry = {
+    data: req.body.date,
+    temp: req.body.temp,
+    feeling: req.body.feeling,
+  };
+  projectData.push(newEntry);
+});
 
 app.listen(3000, () => {
   console.log('App listening on port 3000!');
