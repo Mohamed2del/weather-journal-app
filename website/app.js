@@ -7,7 +7,8 @@ const generateButton = document.getElementById('generate');
 // getDate
 function getCurrentDate() {
   let d = new Date();
-  return d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
+  let month = d.getMonth + 1;
+  return d.getDate() + '.' + month + '.' + d.getFullYear();
 }
 
 // get zipcode
