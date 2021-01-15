@@ -59,6 +59,23 @@ const postData = async (url = '', data = {}) => {
   }
 };
 
+// Get Data =>  string url
+const getData = async (url = '') => {
+  const res = await fetch(url, {
+    method: 'GET',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    // body data type must match "Content-Type" header
+  });
+
+  try {
+    const data = await res.json();
+  } catch (error) {
+    console.log('error', error);
+  }
+};
 // update ui through DOM
 function updateUI(date, temperature, content) {
   document.getElementById('date').innerText = date;
@@ -69,24 +86,42 @@ function updateUI(date, temperature, content) {
 generateButton.addEventListener('click', () => {
   url = BaseURL;
 
-  if (getUserResponse || getZipCode == '') {
+  if (getUserResponse() == '' || getZipCode == '') {
     alert('Please Fill the zipcode and feeling ');
+  } else {
+    getWeather(url, Key, getZipCode())
+      .then((weatherData = {}) => {
+        const data = {
+          temperature: weatherData.main.temp,
+          date: getCurrentDate(),
+          user_response: getUserResponse(),
+        };
+        return data;
+      })
+      .then((data = {}) => {
+        postData('/add', data);
+        return data;
+      })
+      .then(async () => {
+        const res = await fetch('/all', {
+          method: 'GET',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          // body data type must match "Content-Type" header
+        });
+
+        try {
+          const pog = await res.json();
+          console.log(pog);
+          return pog;
+        } catch (error) {
+          console.log('error', error);
+        }
+      })
+      .then((data = {}) => {
+        updateUI(data.date, data.temp, data.feeling);
+      });
   }
-  getWeather(url, Key, getZipCode())
-    .then((weatherData = {}) => {
-      const data = {
-        temperature: weatherData.main.temp,
-        date: getCurrentDate(),
-        user_response: getUserResponse(),
-      };
-      return data;
-    })
-    .then((data = {}) => {
-      console.log(data);
-      postData('/add', data);
-      return data;
-    })
-    .then((data = {}) => {
-      updateUI(data.date, data.temperature, data.user_response);
-    });
 });
